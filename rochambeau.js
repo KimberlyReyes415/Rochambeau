@@ -2,66 +2,71 @@
 // 0 = Rock, 1 = Paper, 2 = Scissors
 var playerChoice;
 var computerChoice;
-// Stores the player's choice
-function storePlayerChoice(choice) {
-    playerChoice = choice;
-    console.log("My choice = " + playerChoice);
-}
-// The button elements
-var rockButton = document.getElementById("rock");
-var paperButton = document.getElementById("paper");
-var scissorsButton = document.getElementById("scissors");
 
-// Add the event handlers
-rockButton.addEventListener('click', () => {storePlayerChoice(0)});
-paperButton.addEventListener('click', () => {storePlayerChoice(1)});
-scissorsButton.addEventListener('click', () => {storePlayerChoice(2)});
-// Generate computer's random choice
-function storeComputerChoice() {
-    computerChoice = Math.floor(Math.random()*3);
-    console.log("Computer choice = " + computerChoice);
-}
+// Stores the lables for the choices
+var choices = ["Rock", "Paper", "Scissors", "Lizard", "Spock  "];
+
+// Variable to store the score
+// score[0] = wins, score[1] = ties, score[2] = losses
+var score = [0,0,0];
+
 // Stores the player's choice, then call's the function for storing the computer's choice
 function storePlayerChoice(choice) {
     playerChoice = choice;
     console.log("My choice = " + choice);
     storeComputerChoice();
 }
+
+// Generate computer's random choice
+function storeComputerChoice() {
+    computerChoice = Math.floor(Math.random()*5);
+    console.log("Computer choice = " + computerChoice);
+}
+
 // This is the function for playing the game
-function playGame(){
+function playGame() {
     // Here is the game ruleset algorithm
     if (playerChoice == computerChoice) {
         // We have a tie!
-        console.log("tie");
+        updateScore(1);
+        displayGameResult("tie")
     } else if (playerChoice == 0 && computerChoice == 2) {
         // Rock beats scissors - a win!
-        console.log("win");
+        updateScore(0);
+        displayGameResult("win")
+    } else if (playerChoice == 0 && computerChoice == 3) {
+        // Rock kills Lizard - a win!
+        updateScore(0);
+        displayGameResult("win")
     } else if (playerChoice == 1 && computerChoice == 0) {
         // Paper beats scissors - a win!
-        console.log("win");
-    } else if (playerChoice == 2 && computerChoice == 1) {
+        updateScore(0);
+        displayGameResult("win")
+    } else if (playerChoice == 1 && computerChoice == 0) {
+        // Paper beats Spock - a win!
+        updateScore(0);
+        displayGameResult("win")
+    } else if (playerChoice == 2 && computerChoice == 4) {
         // Scissors beats paper - a win!
-        console.log("win");
+        updateScore(0);
+        displayGameResult("win")
+         } else if (playerChoice == 2 && computerChoice == 4) {
+        // Scissors beats paper - a win!
+        updateScore(0);
+        displayGameResult("win")
     } else {
         // All other combinations are losses
-        console.log("lose");
+        updateScore(2);
+        displayGameResult("lose")
     }
 }
-// The button elements
-var rockButton = document.getElementById("rock");
-var paperButton = document.getElementById("paper");
-var scissorsButton = document.getElementById("scissors");
-var playButton = document.getElementById("play");
 
-// Add the event handlers
-rockButton.addEventListener('click', () => {storePlayerChoice(0)});
-paperButton.addEventListener('click', () => {storePlayerChoice(1)});
-scissorsButton.addEventListener('click', () => {storePlayerChoice(2)});
-playButton.addEventListener('click', () => {playGame()});
+
 //Displays the result of the game
 function displayGameResult(result){
+    // Define an array of text labels for the choices 0, 1, 2;
     // Create a message for the player
-    var message = "Your choice was " + playerChoice + " and the computer's choice was " + computerChoice + ".";
+    var message = "Your choice was " + choices[playerChoice] + " and the computer's choice was " + choices[computerChoice] + ".";
     // Add to the base message if it was a win, loss, or tie
     if (result === "win") {
         // Display that it was a win
@@ -76,26 +81,33 @@ function displayGameResult(result){
         document.getElementById("result").textContent = message + " A tie.";
         document.getElementById("result").className = "alert alert-info";
     }
+
+    updateScoreBoard();
 }
-// This is the function for playing the game
-function playGame(){
-    // Here is the game ruleset algorithm
-    if (playerChoice == computerChoice) {
-        // We have a tie!
-        displayGameResult("tie")
-    } else if (playerChoice == 0 && computerChoice == 2) {
-        // Rock beats scissors - a win!
-        displayGameResult("win")
-    } else if (playerChoice == 1 && computerChoice == 0) {
-        // Paper beats scissors - a win!
-        displayGameResult("win")
-    } else if (playerChoice == 2 && computerChoice == 1) {
-        // Scissors beats paper - a win!
-        displayGameResult("win")
-    } else {
-        // All other combinations are losses
-        displayGameResult("lose")
-    }
+
+// Updates the score
+function updateScore(val){
+    ++score[val];
+    console.log("The score is now " + score);
 }
-// Stores the lables for the choices
-var choices = ["Rock", "Paper", "Scissors"];
+
+// Function for displaying the score
+function updateScoreBoard(){
+    document.getElementById("wins").textContent = score[0];
+    document.getElementById("losses").textContent = score[2];
+    document.getElementById("ties").textContent = score[1];
+}
+
+// The button elements
+var rockButton = document.getElementById("rock");
+var paperButton = document.getElementById("paper");
+var scissorsButton = document.getElementById("scissors");
+var playButton = document.getElementById("play");
+
+// Add the event handlers
+rockButton.addEventListener('click', () => {storePlayerChoice(0)});
+paperButton.addEventListener('click', () => {storePlayerChoice(1)});
+scissorsButton.addEventListener('click', () => {storePlayerChoice(2)});
+lizardButton.addEventListener('click', () => {storePlayerChoice(3)});
+spockButton.addEventListener('click', () => {storePlayerChoice(4)});
+playButton.addEventListener('click', () => {playGame()});
