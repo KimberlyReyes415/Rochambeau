@@ -1,7 +1,15 @@
 var playerChoice;
 var computerChoice;
+/**
+ * Represents a player
+ */
+function Player() {
+    this.choice = null;
+}
+var player = new Player();
+var computer = new Player();
 
-var choices = ["Rock", "Paper", "Scissors", "Lizard", "Spock"];
+
 
 // Variable to store the score
 // score[0] = wins, score[1] = ties, score[2] = losses
@@ -9,54 +17,68 @@ var score = [0, 0, 0];
 var matches = [0, 0];
 
 // Stores the player's choice, then call's the function for storing the computer's choice
-function storePlayerChoice(choice) {
-    playerChoice = choice;
-    console.log("My choice = " + choice);
-    storeComputerChoice();
-}
+storePlayerChoice: function (choice) {
+        this.player.choice = choice;
+        console.log("My choice = " + this.player.choice);
+        this.storeComputerChoice();
+    },
 
-// Generate computer's random choice
-function storeComputerChoice() {
-    computerChoice = Math.floor(Math.random() * 5);
-    console.log("Computer choice = " + computerChoice);
-}
-
+    // Generate the computer's random choice
+    storeComputerChoice: function () {
+        this.computer.choice = Math.floor(Math.random() * 3);
+    }
 // This is the function for playing the game
 function playGame() {
-    if (playerChoice == computerChoice) {
-        updateScore(1);
-        displayGameResult("tie");
-    } else if (playerChoice == 0 && (computerChoice == 2 || computerChoice == 4)) {
-        updateScore(0);
-        displayGameResult("win");
-    } else if (playerChoice == 1 && (computerChoice == 0 || computerChoice == 3)) {
-        updateScore(0);
-        displayGameResult("win");
-    } else if (playerChoice == 2 && (computerChoice == 1 || computerChoice == 4)) {
-        updateScore(0);
-        displayGameResult("win");
-    } else if (playerChoice == 3 && (computerChoice == 2 || computerChoice == 4)) {
-        updateScore(0);
-        displayGameResult("win");
-    } else if (playerChoice == 4 && (computerChoice == 3 || computerChoice == 0)) {
-        updateScore(0);
-        displayGameResult("win");
+    // Here is the game ruleset algorithm
+    if (player.choice == computer.choice) {
+        // We have a tie!
+        ++score.ties;
+        displayGameResult("tie")
+    } else if (player.choice == choices.ROCK && computer.choice == choices.SCISSORS) {
+        // Rock beats scissors - a win!
+        ++score.wins;
+        displayGameResult("win")
+    } else if (player.choice == choices.ROCK && computer.choice == choices.LIZARD) {
+        // Rock kill lizard - a win!
+        ++score.wins;
+        displayGameResult("win")
+    } else if (player.choice == choices.PAPER && computer.choice == choices.ROCK) {
+        // Paper beats rock - a win!
+        ++score.wins;
+        displayGameResult("win")
+    } else if (player.choice == choices.PAPER && computer.choice == choices.SPOCK) {
+        // Paper beats spock - a win!
+        ++score.wins;
+        displayGameResult("win")
+    } else if (player.choice == choices.SCISSORS && computer.choice == choices.PAPER) {
+        // Scissors beats paper - a win!
+        ++score.wins;
+        displayGameResult("win")
+    }else if (player.choice == choices.SCISSORS && computer.choice == choices.LIZARD) {
+        // Scissors kills Lizard  - a win!
+        ++score.wins;
+        displayGameResult("win")
+    }else if (player.choice == choices.SPOCK && computer.choice == choices.SCISSORS) {
+        // Spock  defeats Scissors  - a win!
+        ++score.wins;
+        displayGameResult("win")
+    } else if (player.choice == choices.SPOCK && computer.choice == choices.ROCK) {
+        // Spock  defeats rock  - a win!
+        ++score.wins;
+        displayGameResult("win")
+    }else if (player.choice == choices.LIZARD && computer.choice == choices.SPOCK) {
+        // Lizard kills spock  - a win!
+        ++score.wins;
+        displayGameResult("win")
+    } else if (player.choice == choices.LIZARD && computer.choice == choices.PAPER) {
+        // Lizard kills paper  - a win!
+        ++score.wins;
+        displayGameResult("win")
     } else {
-        updateScore(2);
-        displayGameResult("lose");
-
+        // All other combinations are losses
+        ++score.losses;
+        displayGameResult("lose")
     }
-
-
-
-if (score[0] == 2) {
-    updateMatch(0);
-    score = [0, 0, 0];
-} else if (score[2] == 2) {
-    updateMatch(1);
-    score = [0, 0, 0];
-}
-
 }
 //Displays the result of the game
 function displayGameResult(result) {
@@ -134,4 +156,37 @@ spockButton.addEventListener('click', () => {
 playButton.addEventListener('click', () => {
     playGame()
 });
+/**
+ * The game of Rochambeau!
+ */
+var Rochambeau = {
 
+}
+var Rochambeau = {
+
+    choices: {
+        ROCK: 0,
+        PAPER: 1,
+        SCISSORS: 2,
+        LIZARD: 3,
+        SPOCK: 4,
+
+    },
+
+    score: {
+        wins: 0,
+        losses: 0,
+        ties: 0
+    },
+
+    results: {
+        WIN: 1,
+        TIE: 0,
+        LOSS: -1
+    },
+
+    player: new Player(),
+
+    computer: new Player()
+
+}
